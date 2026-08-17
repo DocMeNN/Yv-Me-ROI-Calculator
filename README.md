@@ -6,8 +6,8 @@ Yobe State 12-month pilot.
 ## Core Budget Model
 
 - CHEWs / Nurses: 100
-- Beneficiaries: 500
-- Average beneficiaries per CHEW: 5
+- Beneficiaries: 1,000
+- Average beneficiaries per CHEW: 10
 - Pilot duration: 12 months
 - Programme budget: NGN 407,343,531
 - Location: Yobe State, Nigeria
@@ -32,15 +32,19 @@ an interactive financial model for:
 
 ## Budget Structure
 
-1. Objective 1 — Training and Deployment
-2. Objective 2 — Community-Based Care Delivery
-3. Objective 3 — Advocacy and Technical Support
-4. Objective 4 — Health Governance and Public Awareness
+1. Objective 1 - Training and Deployment
+2. Objective 2 - Community-Based Care Delivery
+3. Objective 3 - Advocacy and Technical Support
+4. Objective 4 - Health Governance and Public Awareness
 5. Communications and M&E
 6. Equipment
 7. Personnel
 8. Management / Indirect Costs
 
+## Care Delivery Model
+
+**1 CHEW : 10 Beneficiaries**
+
 ## Status
 
-Version 1 — Foundation
+Version 1 - Foundation

@@ -8,8 +8,8 @@ from calculator.roi import (
 
 def test_programme():
     assert PROGRAMME["chews"] == 100
-    assert PROGRAMME["beneficiaries"] == 500
-    assert PROGRAMME["beneficiaries_per_chew"] == 5
+    assert PROGRAMME["beneficiaries"] == 1000
+    assert PROGRAMME["beneficiaries_per_chew"] == 10
 
 
 def test_cost_per_chew():
@@ -17,7 +17,7 @@ def test_cost_per_chew():
 
 
 def test_cost_per_beneficiary():
-    assert cost_per_beneficiary() == 814_687.062
+    assert cost_per_beneficiary() == 407_343.531
 
 
 def test_monthly_cost():

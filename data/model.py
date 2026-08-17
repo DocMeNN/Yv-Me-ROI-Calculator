@@ -5,8 +5,8 @@ PROGRAMME = {
     "location": "Yobe State, Nigeria",
     "pilot_months": 12,
     "chews": 100,
-    "beneficiaries": 500,
-    "beneficiaries_per_chew": 5,
+    "beneficiaries": 1000,
+    "beneficiaries_per_chew": 10,
     "total_budget": 407_343_531,
     "currency": "NGN",
 }
