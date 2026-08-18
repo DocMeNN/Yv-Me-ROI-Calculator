@@ -1,58 +1,56 @@
 ﻿# Yv-Me ROI Calculator — Live Status
 
 PROJECT: Yv-Me ROI Calculator
-VERSION: v0.4.1
+VERSION: v0.5.0
 MODEL: 1 CHEW : 10 Beneficiaries
-CHEWs: 100
-BENEFICIARIES: 1,000
+CHEWs: Adjustable
+BENEFICIARIES: Automatically calculated
 LOCATION: Yobe State, Nigeria
 SOURCE BUDGET: YOBE STATE EasePal Care PROPOSAL BUDGET.xlsx
-TOTAL BUDGET: NGN 426,906,031
+CURRENT BUDGET: NGN 426,906,031
 
-CURRENT PHASE: Phase 4 — ROI & Financial Analytics
-STATUS: VALIDATED
+CURRENT PHASE: Phase 5 — Interactive Dashboard
+STATUS: FOUNDATION COMPLETE
 
 COMPLETED:
 - [x] GitHub repository
 - [x] 1:10 care model
 - [x] Excel budget integration
-- [x] Normalized budget data
-- [x] Adjustable assumptions
-- [x] Dynamic beneficiary calculations
-- [x] Dynamic cost calculations
-- [x] Dynamic revenue calculations
+- [x] Budget validation
+- [x] Adjustable CHEW assumption
+- [x] Adjustable beneficiary ratio
+- [x] Adjustable programme duration
+- [x] Adjustable budget
+- [x] Adjustable subscription
+- [x] Adjustable investment
+- [x] Adjustable revenue share
+- [x] Dynamic calculations
 - [x] ROI engine
-- [x] Cost per CHEW
-- [x] Cost per beneficiary
-- [x] Monthly operating cost
-- [x] Annual operating cost
 - [x] Break-even engine
-- [x] Payback engine
 - [x] Scenario engine
-- [x] Conservative scenario
-- [x] Moderate scenario
-- [x] Growth scenario
-- [x] Scale scenario
-- [x] Corrected legacy tests
-- [x] Corrected scenario imports
-- [x] Full automated test suite
+- [x] Automated tests
+- [x] Interactive dashboard foundation
+- [x] Editable dashboard assumptions
+- [x] KPI cards
+- [x] Financial analysis table
+- [x] Scaling analysis
+- [x] Revenue chart
+- [x] Contribution chart
+- [x] Investor / partner view
 
-TEST STATUS:
-PASS
-
-CURRENT PHASE:
-Phase 5 — Interactive Dashboard
+CURRENT NEXT:
+Phase 6 — Professional Export Engine
 
 NEXT:
-- [ ] Editable assumptions interface
-- [ ] KPI dashboard
-- [ ] ROI visualisation
-- [ ] Cost visualisation
-- [ ] Revenue visualisation
-- [ ] Scenario selector
-- [ ] Scaling calculator
-- [ ] XLSX export
-- [ ] Presentation explanation sheets
-- [ ] Investor / donor / grant PPTX export
+- [ ] Generate XLSX workbook
+- [ ] Explanation sheets
+- [ ] Budget summary sheet
+- [ ] Assumptions sheet
+- [ ] ROI analysis sheet
+- [ ] Scaling analysis sheet
+- [ ] Investor scenario sheet
+- [ ] Generate investor PPTX
+- [ ] Generate donor/grant PPTX
+- [ ] Generate iNGO presentation PPTX
 
-OVERALL V1 PROGRESS: 40%
+OVERALL V1 PROGRESS: 50%
