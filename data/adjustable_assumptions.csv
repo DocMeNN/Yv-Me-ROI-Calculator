@@ -1,0 +1,9 @@
+﻿assumption_code,assumption,value,unit,status,source
+CHEW_COUNT,Number of CHEWs / Nurses,100,CHEWs,CONFIRMED,Project model
+BENEFICIARY_COUNT,Number of beneficiaries,1000,beneficiaries,ADJUSTABLE,1:10 model
+BENEFICIARIES_PER_CHEW,Beneficiaries per CHEW,10,beneficiaries/CHEW,CONFIRMED,Project model
+PILOT_DURATION,Programme duration,12,months,CONFIRMED,Budget
+TOTAL_BUDGET,Total programme budget,426906031,NGN,CONFIRMED,Source Excel
+SUBSCRIPTION_PER_BENEFICIARY,Monthly subscription per beneficiary,0,NGN/month,TBD,ROI assumption
+REVENUE_SHARE,Partner revenue share,0,%,TBD,ROI assumption
+INVESTMENT_AMOUNT,Private investment amount,0,NGN,TBD,ROI assumption

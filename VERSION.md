@@ -1,5 +1,5 @@
 ﻿Yv-Me ROI Calculator
-Version: 0.1.1
-Status: Foundation - Care Delivery Model Updated
-Budget Model: Yobe State EasePal Care Proposal
-Care Delivery Ratio: 1 CHEW : 10 Beneficiaries
+Version: 0.2.0
+Status: Excel Budget Integration Complete
+Care Delivery Model: 1 CHEW : 10 Beneficiaries
+Source: YOBE STATE EasePal Care PROPOSAL BUDGET.xlsx

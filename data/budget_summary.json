@@ -1,0 +1,21 @@
+{
+    "programme": "EasePal Care",
+    "location": "Yobe State, Nigeria",
+    "pilot_months": 12,
+    "chews": 100,
+    "beneficiaries": 1000,
+    "beneficiaries_per_chew": 10,
+    "currency": "NGN",
+    "objective_1": 19161200,
+    "objective_2": 169862600,
+    "objective_3": 124901000,
+    "objective_4": 9450000,
+    "communications_and_me": 16026000,
+    "equipment": 2720000,
+    "personnel": 12675231,
+    "management_indirect": 81560000,
+    "total_budget": 426906031,
+    "source_file": "YOBE STATE EasePal Care PROPOSAL BUDGET.xlsx",
+    "source_sheet": "Proposal Budget",
+    "care_model": "1 CHEW : 10 Beneficiaries"
+}

@@ -12,9 +12,7 @@ DATA_DIR.mkdir(exist_ok=True)
 SOURCE_DIR.mkdir(parents=True, exist_ok=True)
 
 # Update this path if the Excel file is stored elsewhere.
-SOURCE_FILE = Path(
-    r"C:\Users\HP\Downloads\YOBE STATE EasePal Care PROPOSAL BUDGET copy.xlsx"
-)
+SOURCE_FILE = Path(r"C:\Users\HP\EasePalCare\projects\Yv-Me-ROI-Calculator\docs\YOBE STATE EasePal Care PROPOSAL BUDGET.xlsx")
 
 if not SOURCE_FILE.exists():
     raise FileNotFoundError(
@@ -204,3 +202,4 @@ print(f"Care model           : 1 CHEW : 10 Beneficiaries")
 print(f"Grand Total          : NGN {summary['total_budget']:,}")
 print(f"Ratio validation     : {validation['ratio_check']}")
 print("=" * 60)
+
