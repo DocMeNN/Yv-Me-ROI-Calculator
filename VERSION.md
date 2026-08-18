@@ -1,5 +1,5 @@
 ﻿Yv-Me ROI Calculator
-Version: 0.3.0
-Status: Adjustable Assumptions Engine Complete
+Version: 0.4.0
+Status: ROI & Financial Analytics Complete
 Care Delivery Model: 1 CHEW : 10 Beneficiaries
 Budget: NGN 426,906,031

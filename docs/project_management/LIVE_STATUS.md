@@ -1,7 +1,7 @@
 ﻿# Yv-Me ROI Calculator — Live Status
 
 PROJECT: Yv-Me ROI Calculator
-VERSION: v0.3.0
+VERSION: v0.4.0
 MODEL: 1 CHEW : 10 Beneficiaries
 CHEWs: 100
 BENEFICIARIES: 1,000
@@ -9,7 +9,7 @@ LOCATION: Yobe State, Nigeria
 SOURCE BUDGET: YOBE STATE EasePal Care PROPOSAL BUDGET.xlsx
 TOTAL BUDGET: NGN 426,906,031
 
-CURRENT PHASE: Phase 3 — Adjustable Assumptions Engine
+CURRENT PHASE: Phase 4 — ROI & Financial Analytics
 STATUS: COMPLETE
 
 COMPLETED:
@@ -17,30 +17,37 @@ COMPLETED:
 - [x] 1:10 care model
 - [x] Excel budget integration
 - [x] Normalized budget data
-- [x] Budget validation
-- [x] Adjustable assumptions data layer
-- [x] CHEW count adjustment
-- [x] Beneficiary ratio adjustment
-- [x] Programme duration adjustment
-- [x] Budget adjustment
-- [x] Subscription revenue assumption
-- [x] Investment assumption
-- [x] Dynamic beneficiary calculation
+- [x] Adjustable assumptions
+- [x] Dynamic beneficiary calculations
 - [x] Dynamic cost calculations
 - [x] Dynamic revenue calculations
-- [x] ROI calculation
+- [x] ROI engine
+- [x] Cost per CHEW
+- [x] Cost per beneficiary
+- [x] Monthly operating cost
+- [x] Annual operating cost
+- [x] Break-even engine
+- [x] Payback engine
+- [x] Scenario engine
+- [x] Conservative scenario
+- [x] Moderate scenario
+- [x] Growth scenario
+- [x] Scale scenario
 - [x] Automated tests
 
 CURRENT PHASE:
-Phase 4 — ROI & Financial Analytics
+Phase 5 — Interactive Dashboard
 
 NEXT:
-- [ ] Full ROI dashboard
-- [ ] Break-even analysis
-- [ ] Payback analysis
-- [ ] Investor scenarios
-- [ ] Donor/grant scenarios
-- [ ] Scaling scenarios
-- [ ] Revenue model scenarios
+- [ ] Build interactive dashboard
+- [ ] Editable assumptions interface
+- [ ] KPI cards
+- [ ] ROI visualisation
+- [ ] Revenue visualisation
+- [ ] Cost visualisation
+- [ ] Scenario selector
+- [ ] Scaling calculator
+- [ ] XLSX export
+- [ ] PPTX export
 
-OVERALL V1 PROGRESS: 30%
+OVERALL V1 PROGRESS: 40%
