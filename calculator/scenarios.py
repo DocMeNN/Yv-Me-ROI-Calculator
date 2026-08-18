@@ -1,5 +1,13 @@
-﻿from calculator.analytics import calculate
+﻿from pathlib import Path
+import sys
 
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+from calculator.analytics import calculate
+
+
+BUDGET = 426906031
 
 SCENARIOS = {
 
@@ -8,7 +16,7 @@ SCENARIOS = {
         "beneficiaries_per_chew": 10,
         "programme_months": 12,
         "subscription": 0,
-        "investment": 426906031,
+        "investment": BUDGET,
         "revenue_share": 0,
     },
 
@@ -17,7 +25,7 @@ SCENARIOS = {
         "beneficiaries_per_chew": 10,
         "programme_months": 12,
         "subscription": 10000,
-        "investment": 426906031,
+        "investment": BUDGET,
         "revenue_share": 20,
     },
 
@@ -26,7 +34,7 @@ SCENARIOS = {
         "beneficiaries_per_chew": 10,
         "programme_months": 12,
         "subscription": 15000,
-        "investment": 426906031,
+        "investment": BUDGET,
         "revenue_share": 15,
     },
 
@@ -35,7 +43,7 @@ SCENARIOS = {
         "beneficiaries_per_chew": 10,
         "programme_months": 12,
         "subscription": 15000,
-        "investment": 426906031,
+        "investment": BUDGET,
         "revenue_share": 10,
     },
 
@@ -44,15 +52,13 @@ SCENARIOS = {
         "beneficiaries_per_chew": 10,
         "programme_months": 12,
         "subscription": 15000,
-        "investment": 426906031,
+        "investment": BUDGET,
         "revenue_share": 10,
     },
 }
 
 
 def run_scenarios():
-
-    budget = 426906031
 
     print("=" * 90)
     print("Yv-Me SCENARIO ANALYSIS")
@@ -64,7 +70,7 @@ def run_scenarios():
             chews=s["chews"],
             beneficiaries_per_chew=s["beneficiaries_per_chew"],
             programme_months=s["programme_months"],
-            total_budget=budget,
+            total_budget=BUDGET,
             subscription_per_beneficiary=s["subscription"],
             investment_amount=s["investment"],
             revenue_share=s["revenue_share"],
@@ -76,16 +82,21 @@ def run_scenarios():
         print(f"Beneficiaries: {result['beneficiaries']:,}")
         print(
             f"Annual Revenue: "
-            f"NGN {result['annual_gross_revenue']:,.0f}"
+            f"NGN {result['annual_gross_revenue']:,.2f}"
         )
         print(
             f"Annual Contribution: "
-            f"NGN {result['annual_contribution']:,.0f}"
+            f"NGN {result['annual_contribution']:,.2f}"
         )
-        print(
-            f"ROI: "
-            f"{result['roi']:.2%}"
-        )
+        print(f"ROI: {result['roi']:.2%}")
+
+        if result["break_even_months"] == float("inf"):
+            print("Break-even: NOT REACHED")
+        else:
+            print(
+                f"Break-even: "
+                f"{result['break_even_months']:.2f} months"
+            )
 
     print("")
     print("=" * 90)

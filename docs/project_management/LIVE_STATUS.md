@@ -1,7 +1,7 @@
 ﻿# Yv-Me ROI Calculator — Live Status
 
 PROJECT: Yv-Me ROI Calculator
-VERSION: v0.4.0
+VERSION: v0.4.1
 MODEL: 1 CHEW : 10 Beneficiaries
 CHEWs: 100
 BENEFICIARIES: 1,000
@@ -10,7 +10,7 @@ SOURCE BUDGET: YOBE STATE EasePal Care PROPOSAL BUDGET.xlsx
 TOTAL BUDGET: NGN 426,906,031
 
 CURRENT PHASE: Phase 4 — ROI & Financial Analytics
-STATUS: COMPLETE
+STATUS: VALIDATED
 
 COMPLETED:
 - [x] GitHub repository
@@ -33,21 +33,26 @@ COMPLETED:
 - [x] Moderate scenario
 - [x] Growth scenario
 - [x] Scale scenario
-- [x] Automated tests
+- [x] Corrected legacy tests
+- [x] Corrected scenario imports
+- [x] Full automated test suite
+
+TEST STATUS:
+PASS
 
 CURRENT PHASE:
 Phase 5 — Interactive Dashboard
 
 NEXT:
-- [ ] Build interactive dashboard
 - [ ] Editable assumptions interface
-- [ ] KPI cards
+- [ ] KPI dashboard
 - [ ] ROI visualisation
-- [ ] Revenue visualisation
 - [ ] Cost visualisation
+- [ ] Revenue visualisation
 - [ ] Scenario selector
 - [ ] Scaling calculator
 - [ ] XLSX export
-- [ ] PPTX export
+- [ ] Presentation explanation sheets
+- [ ] Investor / donor / grant PPTX export
 
 OVERALL V1 PROGRESS: 40%
