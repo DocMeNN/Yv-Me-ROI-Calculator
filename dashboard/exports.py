@@ -9,31 +9,26 @@ if str(ROOT) not in sys.path:
 from calculator.export_engine import export_xlsx, export_pptx
 
 
-def export_dashboard_files():
+def generate_xlsx():
+    return export_xlsx()
 
-    results = {
-        "xlsx": False,
-        "pptx": False,
+
+def generate_pptx():
+    return export_pptx()
+
+
+def generate_all():
+    return {
+        "xlsx": generate_xlsx(),
+        "pptx": generate_pptx(),
     }
-
-    results["xlsx"] = export_xlsx()
-    results["pptx"] = export_pptx()
-
-    return results
 
 
 if __name__ == "__main__":
-
-    results = export_dashboard_files()
+    result = generate_all()
 
     print("")
-    print("Yv-Me DASHBOARD EXPORT")
-    print("----------------------")
-    print(
-        "Excel:",
-        "READY" if results["xlsx"] else "FAILED"
-    )
-    print(
-        "PowerPoint:",
-        "READY" if results["pptx"] else "FAILED"
-    )
+    print("Yv-Me EXPORT STATUS")
+    print("===================")
+    print("XLSX:", "READY" if result["xlsx"] else "FAILED")
+    print("PPTX:", "READY" if result["pptx"] else "FAILED")
