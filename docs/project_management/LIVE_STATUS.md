@@ -1,40 +1,46 @@
 ﻿# Yv-Me ROI Calculator — Live Status
 
 PROJECT: Yv-Me ROI Calculator
-VERSION: v0.2.0
+VERSION: v0.3.0
 MODEL: 1 CHEW : 10 Beneficiaries
 CHEWs: 100
 BENEFICIARIES: 1,000
 LOCATION: Yobe State, Nigeria
+SOURCE BUDGET: YOBE STATE EasePal Care PROPOSAL BUDGET.xlsx
+TOTAL BUDGET: NGN 426,906,031
 
-CURRENT PHASE: Phase 2 — Excel Budget Integration
+CURRENT PHASE: Phase 3 — Adjustable Assumptions Engine
 STATUS: COMPLETE
 
 COMPLETED:
-- [x] Repository created
-- [x] GitHub repository connected
-- [x] 1:10 care model applied
-- [x] Yobe State budget workbook identified
-- [x] Excel workbook imported
-- [x] Budget activities normalized
-- [x] Unit amounts captured
-- [x] Quantities captured
-- [x] Frequencies captured
-- [x] Activity totals captured
-- [x] Budget summary generated
-- [x] Adjustable assumptions data layer generated
-- [x] Source workbook archived
-- [x] Budget validation generated
+- [x] GitHub repository
+- [x] 1:10 care model
+- [x] Excel budget integration
+- [x] Normalized budget data
+- [x] Budget validation
+- [x] Adjustable assumptions data layer
+- [x] CHEW count adjustment
+- [x] Beneficiary ratio adjustment
+- [x] Programme duration adjustment
+- [x] Budget adjustment
+- [x] Subscription revenue assumption
+- [x] Investment assumption
+- [x] Dynamic beneficiary calculation
+- [x] Dynamic cost calculations
+- [x] Dynamic revenue calculations
+- [x] ROI calculation
+- [x] Automated tests
 
-NEXT PHASE:
-Phase 3 — Adjustable Assumptions Engine
+CURRENT PHASE:
+Phase 4 — ROI & Financial Analytics
 
-NEXT TASKS:
-- [ ] Build editable assumptions interface
-- [ ] Connect assumptions to calculator
-- [ ] Automatic recalculation
-- [ ] Confirmed/TBD controls
-- [ ] Scenario management
-- [ ] User-adjustable budget figures
+NEXT:
+- [ ] Full ROI dashboard
+- [ ] Break-even analysis
+- [ ] Payback analysis
+- [ ] Investor scenarios
+- [ ] Donor/grant scenarios
+- [ ] Scaling scenarios
+- [ ] Revenue model scenarios
 
-OVERALL V1 PROGRESS: 20%
+OVERALL V1 PROGRESS: 30%

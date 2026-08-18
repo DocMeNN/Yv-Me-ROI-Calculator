@@ -1,5 +1,5 @@
 ﻿Yv-Me ROI Calculator
-Version: 0.2.0
-Status: Excel Budget Integration Complete
+Version: 0.3.0
+Status: Adjustable Assumptions Engine Complete
 Care Delivery Model: 1 CHEW : 10 Beneficiaries
-Source: YOBE STATE EasePal Care PROPOSAL BUDGET.xlsx
+Budget: NGN 426,906,031
