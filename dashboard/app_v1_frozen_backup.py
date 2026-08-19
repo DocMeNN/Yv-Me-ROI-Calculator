@@ -308,17 +308,24 @@ with investor_col2:
     )
 
 # ============================================================
-# ============================================================
-# EXPORT & PRESENTATION
+# EXPORT PREPARATION
 # ============================================================
 
-st.header("6. Export & Presentation")
+st.markdown("---")
+st.header("6. Export")
 
-st.markdown(
-    "Generate presentation-ready financial outputs from the "
-    "current adjustable assumptions and ROI model."
+st.info(
+    "XLSX and investor/donor/grant PPTX export modules will be "
+    "connected in the next build stage."
 )
 
-from dashboard.export_panel import export_panel
+# ============================================================
+# FOOTER
+# ============================================================
 
-export_panel()
+st.markdown("---")
+
+st.caption(
+    "Yv-Me ROI Calculator | EasePal Care | "
+    "Yobe State, Nigeria | Version 0.5.0"
+)
