@@ -102,7 +102,68 @@ def financial_intelligence_panel(
     sustainability = intelligence["sustainability"]
     investor = intelligence["investor"]
 
+    # ========================================================
+    # EXECUTIVE SUMMARY
+    # ========================================================
+
+    st.subheader("Executive Financial Position")
+
+    if sustainability["break_even_reached"]:
+        st.success(
+            f"Programme sustainability threshold reached. "
+            f"Break-even is achieved at "
+            f"{sustainability['break_even_beneficiaries']:,} "
+            f"paying beneficiaries."
+        )
+    else:
+        if sustainability["break_even_beneficiaries"] is None:
+            st.error(
+                "Programme is not currently sustainable under "
+                "the selected revenue and variable-cost assumptions."
+            )
+        else:
+            gap = (
+                sustainability["break_even_beneficiaries"]
+                - revenue["paying_beneficiaries"]
+            )
+
+            st.warning(
+                f"Programme is below break-even by approximately "
+                f"{gap:,} paying beneficiaries. "
+                f"Required break-even level: "
+                f"{sustainability['break_even_beneficiaries']:,}."
+            )
+
+    summary_col1, summary_col2, summary_col3 = st.columns(3)
+
+    with summary_col1:
+        st.metric(
+            "Current Paying Beneficiaries",
+            f"{revenue['paying_beneficiaries']:,}",
+        )
+
+    with summary_col2:
+        st.metric(
+            "Break-even Beneficiaries",
+            (
+                "N/A"
+                if sustainability["break_even_beneficiaries"] is None
+                else f"{sustainability['break_even_beneficiaries']:,}"
+            ),
+        )
+
+    with summary_col3:
+        st.metric(
+            "Required Subscription",
+            (
+                "N/A"
+                if sustainability["required_subscription"] is None
+                else f"?{sustainability['required_subscription']:,.0f}"
+            ),
+        )
+
     st.subheader("Revenue Intelligence")
+
 
     r1, r2, r3, r4 = st.columns(4)
 
@@ -113,12 +174,12 @@ def financial_intelligence_panel(
 
     r2.metric(
         "Monthly Revenue",
-        f"?{revenue['monthly_revenue']:,.0f}",
+        f"₦{revenue['monthly_revenue']:,.0f}",
     )
 
     r3.metric(
         "Annual Revenue",
-        f"?{revenue['annual_revenue']:,.0f}",
+        f"₦{revenue['annual_revenue']:,.0f}",
     )
 
     r4.metric(
@@ -132,12 +193,12 @@ def financial_intelligence_panel(
 
     g1.metric(
         "Grant Amount",
-        f"?{grant['grant_amount']:,.0f}",
+        f"₦{grant['grant_amount']:,.0f}",
     )
 
     g2.metric(
         "Funding Gap",
-        f"?{grant['funding_gap']:,.0f}",
+        f"₦{grant['funding_gap']:,.0f}",
     )
 
     g3.metric(
@@ -147,7 +208,7 @@ def financial_intelligence_panel(
 
     g4.metric(
         "Cost / Beneficiary",
-        f"?{grant['cost_per_beneficiary']:,.0f}",
+        f"₦{grant['cost_per_beneficiary']:,.0f}",
     )
 
     st.subheader("Sustainability Intelligence")
@@ -156,7 +217,7 @@ def financial_intelligence_panel(
 
     s1.metric(
         "Contribution / Beneficiary",
-        f"?{sustainability['contribution_per_beneficiary']:,.0f}",
+        f"₦{sustainability['contribution_per_beneficiary']:,.0f}",
     )
 
     s2.metric(
@@ -178,20 +239,27 @@ def financial_intelligence_panel(
         (
             "N/A"
             if sustainability["required_subscription"] is None
-            else f"?{sustainability['required_subscription']:,.0f}"
+            else f"₦{sustainability['required_subscription']:,.0f}"
         ),
     )
 
     st.subheader("Investor / Partner Intelligence")
 
     if investor is None:
-        st.info("Enter an investment amount above to activate investor metrics.")
+        st.info(
+            "Enter an investment amount above to activate investor metrics."
+        )
     else:
+        st.caption(
+            "Investor metrics are calculated against the specified investment "
+            "and the projected investor-attributable cash flow."
+        )
+
         i1, i2, i3, i4 = st.columns(4)
 
         i1.metric(
             "Net Return",
-            f"?{investor['net_return']:,.0f}",
+            f"₦{investor['net_return']:,.0f}",
         )
 
         i2.metric(
