@@ -7,6 +7,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from calculator.analytics import calculate
+from dashboard.financial_intelligence_panel import financial_intelligence_panel
 
 st.set_page_config(
     page_title="Yv-Me ROI Calculator",
@@ -322,3 +323,17 @@ st.markdown(
 from dashboard.export_panel import export_panel
 
 export_panel()
+
+
+# ============================================================
+# FINANCIAL INTELLIGENCE
+# ============================================================
+
+financial_intelligence_panel(
+    beneficiaries=result["beneficiaries"],
+    programme_cost=result["total_budget"],
+    monthly_subscription=subscription,
+    programme_duration_months=programme_months,
+    investment_amount=investment,
+    revenue_share=revenue_share,
+)
