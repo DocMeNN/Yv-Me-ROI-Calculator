@@ -158,7 +158,7 @@ def financial_intelligence_panel(
             (
                 "N/A"
                 if sustainability["required_subscription"] is None
-                else f"?{sustainability['required_subscription']:,.0f}"
+                else f"{chr(0x20A6)}{sustainability['required_subscription']:,.0f}"
             ),
         )
 
