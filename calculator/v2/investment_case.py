@@ -120,5 +120,27 @@ def build_v2_investment_case(
         "investor_irr": investor_irr,
         "partnership_structures": partnership_structures,
         "funding_mix": funding_mix,
-        "sensitivity": sensitivity,
+        "sensitivity": {
+            **sensitivity,
+            "collection_rate": calculate_sensitivity(
+                "collection_rate",
+                [0.80, 1.00, 1.20],
+                starting_beneficiaries,
+                monthly_subscription,
+                annual_operating_cost,
+                initial_investment,
+            ),
+            "operating_cost": calculate_sensitivity(
+                "operating_cost",
+                [
+                    annual_operating_cost * 0.80,
+                    annual_operating_cost,
+                    annual_operating_cost * 1.20,
+                ],
+                starting_beneficiaries,
+                monthly_subscription,
+                annual_operating_cost,
+                initial_investment,
+            ),
+        },
     }
