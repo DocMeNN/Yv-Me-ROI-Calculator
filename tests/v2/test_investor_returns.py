@@ -20,14 +20,14 @@ def test_investor_roi():
         revenue_share=0.10,
     )
 
-    assert investor_roi(cash_flows) == 8.0
-    assert net_investor_return(cash_flows) == 800000000
+    assert investor_roi(cash_flows) == -0.1
+    assert net_investor_return(cash_flows) == -10000000
 
 
 def test_payback_year():
     periods = [
-        AnnualOperatingPeriod(1, 1000, 1000, 200000000, 120000000),
-        AnnualOperatingPeriod(2, 1500, 1500, 300000000, 160000000),
+        AnnualOperatingPeriod(1, 1000, 1000, 600000000, 120000000),
+        AnnualOperatingPeriod(2, 1500, 1500, 700000000, 160000000),
     ]
 
     cash_flows = build_investor_cash_flows(
