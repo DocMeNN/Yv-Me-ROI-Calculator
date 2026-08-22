@@ -201,7 +201,7 @@ st.dataframe(
     financial_data.style.format(
         {"Amount (NGN)": "₦{:,.2f}"}
     ),
-    use_container_width=True,
+    width='stretch',
     hide_index=True
 )
 
@@ -251,7 +251,7 @@ st.dataframe(
         "Annual Contribution": "₦{:,.0f}",
         "ROI": "{:.2%}",
     }),
-    use_container_width=True,
+    width='stretch',
     hide_index=True
 )
 
