@@ -1,117 +1,44 @@
 ﻿import streamlit as st
-
 from calculator.v2.investment_case import build_v2_investment_case
 
-
 def render_investment_case():
-    st.markdown(
-        '<div class="v2-section">Investment Case</div>',
-        unsafe_allow_html=True,
+    st.markdown("### Investment Case")
+
+    investment = st.number_input(
+        "Investment Amount (NGN)",
+        min_value=0.0,
+        value=10000000.0,
+        step=1000000.0,
+        format="%.0f",
     )
 
-    st.caption(
-        "V2 investment-case engine — executive view of the underlying financial case."
+    revenue_share = st.number_input(
+        "Investor Revenue Share (%)",
+        min_value=0.0,
+        max_value=100.0,
+        value=20.0,
+        step=1.0,
     )
 
-    col1, col2, col3 = st.columns(3)
+    years = st.number_input(
+        "Projection Period (Years)",
+        min_value=1,
+        max_value=20,
+        value=5,
+        step=1,
+    )
 
-    with col1:
-        chews = st.number_input(
-            "CHEWs",
-            min_value=1,
-            value=10,
-            step=10,
-            key="v2_chews",
-        )
-
-    with col2:
-        patients_per_chew = st.number_input(
-            "Patients per CHEW",
-            min_value=1,
-            value=10,
-            step=1,
-            key="v2_patients_per_chew",
-        )
-
-    with col3:
-        subscription = st.number_input(
-            "Subscription / Patient / Month (NGN)",
-            min_value=0.0,
-            value=15000.0,
-            step=500.0,
-            key="v2_subscription",
-        )
-
-    try:
+    if st.button("Calculate Investment Case", type="primary"):
         result = build_v2_investment_case(
-            chews=chews,
-            patients_per_chew=patients_per_chew,
-            subscription_per_patient=subscription,
+            investment_amount=investment,
+            revenue_share=revenue_share / 100,
+            years=years,
         )
-    except TypeError:
-        try:
-            result = build_v2_investment_case(
-                chews,
-                patients_per_chew,
-                subscription,
-            )
-        except TypeError:
-            st.error(
-                "Investment Case engine signature does not match the current dashboard adapter."
-            )
-            return
 
-    if not isinstance(result, dict):
-        result = vars(result)
+        st.session_state["v2_investment_case"] = result
 
-    def first_value(*names, default=0):
-        for name in names:
-            if name in result:
-                return result[name]
-        return default
+    result = st.session_state.get("v2_investment_case")
 
-    patients = first_value(
-        "patients",
-        "total_patients",
-        "patient_count",
-    )
-
-    monthly_revenue = first_value(
-        "monthly_revenue",
-        "monthly_subscription_revenue",
-        "revenue_monthly",
-    )
-
-    annual_revenue = first_value(
-        "annual_revenue",
-        "annual_subscription_revenue",
-        "revenue_annual",
-    )
-
-    investment = first_value(
-        "investment",
-        "initial_investment",
-        "setup_cost",
-        "total_investment",
-    )
-
-    cols = st.columns(4)
-
-    metrics = [
-        ("Patients", patients, "{:,.0f}"),
-        ("Monthly Revenue", monthly_revenue, "₦{:,.0f}"),
-        ("Annual Revenue", annual_revenue, "₦{:,.0f}"),
-        ("Initial Investment", investment, "₦{:,.0f}"),
-    ]
-
-    for col, (label, value, fmt) in zip(cols, metrics):
-        with col:
-            try:
-                display_value = fmt.format(float(value))
-            except (TypeError, ValueError):
-                display_value = str(value)
-
-            st.metric(label, display_value)
-
-    with st.expander("Investment Case Engine Output"):
+    if result is not None:
+        st.markdown("#### Investment Case Results")
         st.json(result)
