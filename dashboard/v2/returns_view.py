@@ -1,132 +1,64 @@
-﻿import streamlit as st
+﻿from __future__ import annotations
 
+import streamlit as st
+
+from calculator.v2.cash_flow import (
+    AnnualOperatingPeriod,
+    build_investor_cash_flows,
+)
 from calculator.v2.investor_returns import (
     calculate_investor_returns,
 )
 
 
-def _value(result, *names, default=0):
-    if isinstance(result, dict):
-        for name in names:
-            if name in result:
-                return result[name]
-    else:
-        for name in names:
-            if hasattr(result, name):
-                return getattr(result, name)
-    return default
+def render_returns_view(
+    *,
+    periods: list[AnnualOperatingPeriod],
+    investment_amount: float,
+) -> None:
+    st.markdown("### Investor Returns")
 
-
-def render_returns():
-    st.markdown(
-        '<div class="v2-section">Investor Returns</div>',
-        unsafe_allow_html=True,
+    cash_flows = build_investor_cash_flows(
+        periods=periods,
+        investment_amount=investment_amount,
     )
 
-    st.caption(
-        "Evaluate investor cash returns, payback and return performance."
-    )
+    returns = calculate_investor_returns(cash_flows)
 
     col1, col2, col3 = st.columns(3)
 
-    with col1:
-        investment = st.number_input(
-            "Investment Amount (NGN)",
-            min_value=0.0,
-            value=10000000.0,
-            step=500000.0,
-            key="v2_returns_investment",
-        )
-
-    with col2:
-        annual_cash_return = st.number_input(
-            "Annual Cash Return (NGN)",
-            min_value=0.0,
-            value=3000000.0,
-            step=100000.0,
-            key="v2_returns_annual_cash",
-        )
-
-    with col3:
-        years = st.number_input(
-            "Investment Period (Years)",
-            min_value=1,
-            value=5,
-            step=1,
-            key="v2_returns_years",
-        )
-
-    try:
-        result = calculate_investor_returns(
-            investment_amount=investment,
-            annual_cash_return=annual_cash_return,
-            years=years,
-        )
-
-    except TypeError:
-        try:
-            result = calculate_investor_returns(
-                investment,
-                annual_cash_return,
-                years,
-            )
-        except Exception as exc:
-            st.error(f"Investor Returns engine adapter error: {exc}")
-            return
-
-    except Exception as exc:
-        st.error(f"Investor Returns engine error: {exc}")
-        return
-
-    total_return = _value(
-        result,
-        "total_return",
-        "cumulative_return",
-        "total_cash_return",
-        default=annual_cash_return * years,
+    col1.metric(
+        "NPV",
+        f"₦{returns.npv:,.0f}",
     )
 
-    roi = _value(
-        result,
-        "roi",
-        "return_on_investment",
-        default=(
-            total_return / investment
-            if investment
-            else 0
-        ),
+    col2.metric(
+        "IRR",
+        f"{returns.irr:.2%}",
     )
 
-    payback = _value(
-        result,
-        "payback_period",
-        "payback_years",
-        "simple_payback",
-        default=(
-            investment / annual_cash_return
-            if annual_cash_return
-            else 0
-        ),
+    col3.metric(
+        "Investment",
+        f"₦{investment_amount:,.0f}",
     )
 
-    cols = st.columns(4)
+    st.markdown("#### Investor Cash Flow")
 
-    metrics = [
-        ("Initial Investment", investment, "₦{:,.0f}"),
-        ("Total Cash Return", total_return, "₦{:,.0f}"),
-        ("ROI", roi, "{:.1%}"),
-        ("Payback Period", payback, "{:.2f} yrs"),
-    ]
+    st.dataframe(
+        [
+            {
+                "Year": cf.year,
+                "Cash Flow (NGN)": cf.cash_flow,
+            }
+            for cf in cash_flows
+        ],
+        width="stretch",
+        hide_index=True,
+    )
 
-    for col, (label, value, fmt) in zip(cols, metrics):
-        with col:
-            try:
-                st.metric(label, fmt.format(float(value)))
-            except (TypeError, ValueError):
-                st.metric(label, str(value))
+    st.markdown("#### Return Interpretation")
 
-    with st.expander("Investor Returns Engine Output"):
-        if isinstance(result, dict):
-            st.json(result)
-        else:
-            st.write(vars(result))
+    if returns.irr > 0:
+        st.success("The investment case generates a positive investor return.")
+    else:
+        st.warning("The investment case does not currently generate a positive IRR.")
