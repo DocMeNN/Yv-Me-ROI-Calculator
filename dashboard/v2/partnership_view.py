@@ -2,20 +2,12 @@
 
 from calculator.v2.partnership import (
     PartnershipStructure,
-    evaluate_partnership_structure,
+    STRUCTURES,
+    calculate_partner_share,
+    calculate_partner_investment,
+    evaluate_structure,
+    compare_partnership_structures,
 )
-
-
-def _value(result, *names, default=0):
-    if isinstance(result, dict):
-        for name in names:
-            if name in result:
-                return result[name]
-    else:
-        for name in names:
-            if hasattr(result, name):
-                return getattr(result, name)
-    return default
 
 
 def render_partnership():
@@ -59,104 +51,94 @@ def render_partnership():
             key="v2_partnership_revenue_share",
         )
 
+    structure = PartnershipStructure(
+        name="Custom Partnership",
+        investment_amount=investment,
+        investor_share=investor_share / 100,
+        revenue_share=revenue_share / 100,
+    )
+
     try:
-        structure = PartnershipStructure(
-            investment_amount=investment,
-            investor_share=investor_share / 100,
-            revenue_share=revenue_share / 100,
-        )
-
-        result = evaluate_partnership_structure(structure)
-
+        result = evaluate_structure(structure)
     except TypeError:
         try:
-            structure = PartnershipStructure(
+            result = evaluate_structure(
                 investment=investment,
                 investor_share=investor_share / 100,
                 revenue_share=revenue_share / 100,
             )
-
-            result = evaluate_partnership_structure(structure)
-
         except Exception as exc:
             st.error(f"Partnership engine adapter error: {exc}")
             return
-
     except Exception as exc:
         st.error(f"Partnership engine error: {exc}")
         return
 
-    partner_return = _value(
+    def value(result, *names, default=0):
+        if isinstance(result, dict):
+            for name in names:
+                if name in result:
+                    return result[name]
+        else:
+            for name in names:
+                if hasattr(result, name):
+                    return getattr(result, name)
+        return default
+
+    partner_investment = value(
         result,
-        "investor_return",
-        "partner_return",
-        "expected_return",
-        "return_amount",
-        default=investment * investor_share / 100,
+        "partner_investment",
+        "investment",
+        default=calculate_partner_investment(investment, structure),
     )
 
-    revenue_allocation = _value(
+    partner_share = value(
         result,
-        "revenue_allocation",
-        "investor_revenue",
-        "revenue_share_amount",
-        default=0,
+        "partner_share",
+        "revenue_share",
+        default=calculate_partner_share(revenue_share, structure),
     )
 
-    remaining_share = max(0.0, 1 - (revenue_share / 100))
+    cols = st.columns(3)
 
-    cols = st.columns(4)
+    with cols[0]:
+        st.metric(
+            "Partner Investment",
+            f"₦{float(partner_investment):,.0f}",
+        )
 
-    metrics = [
-        ("Investment", investment, "₦{:,.0f}"),
-        ("Investor Equity", investor_share / 100, "{:.1%}"),
-        ("Revenue Share", revenue_share / 100, "{:.1%}"),
-        ("Partner Return", partner_return, "₦{:,.0f}"),
-    ]
+    with cols[1]:
+        st.metric(
+            "Investor Share",
+            f"{investor_share:.1f}%",
+        )
 
-    for col, (label, value, fmt) in zip(cols, metrics):
-        with col:
-            try:
-                st.metric(label, fmt.format(float(value)))
-            except (TypeError, ValueError):
-                st.metric(label, str(value))
+    with cols[2]:
+        st.metric(
+            "Revenue Share",
+            f"{float(partner_share):,.1f}%",
+        )
 
     st.markdown(
-        '<div class="v2-section">Commercial Structure</div>',
+        '<div class="v2-section">Available Structures</div>',
         unsafe_allow_html=True,
     )
 
-    structure_data = [
-        {
-            "Component": "Investor Equity",
-            "Share": investor_share / 100,
-        },
-        {
-            "Component": "Revenue Share",
-            "Share": revenue_share / 100,
-        },
-        {
-            "Component": "Remaining Revenue",
-            "Share": remaining_share,
-        },
-    ]
+    structure_rows = []
+
+    for key, item in STRUCTURES.items():
+        structure_rows.append(
+            {
+                "Structure": key,
+                "Description": getattr(item, "description", ""),
+            }
+        )
 
     st.dataframe(
-        structure_data,
-        column_config={
-            "Share": st.column_config.NumberColumn(
-                format="%.1f%%"
-            )
-        },
+        structure_rows,
         width="stretch",
         hide_index=True,
     )
-
-    if revenue_allocation:
-        st.metric(
-            "Investor Revenue Allocation",
-            f"₦{float(revenue_allocation):,.0f}",
-        )
 
     with st.expander("Partnership Engine Output"):
         if isinstance(result, dict):
