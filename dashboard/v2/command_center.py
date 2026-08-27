@@ -1,11 +1,15 @@
 ﻿import streamlit as st
 
+from .cash_flow_view import render_cash_flow_view
 from .funding_mix_view import render_funding_mix
 from .investment_case_view import render_investment_case
+from .kpis_view import render_kpis_view
 from .navigation import dashboard_modules
-from .npv_irr_view import render_npv_irr
 from .partnership_view import render_partnership
 from .returns_view import render_returns
+from .scenarios_view import render_scenarios_view
+from .sensitivity_view import render_sensitivity_view
+from .npv_irr_view import render_npv_irr
 from .shell import render_header
 
 
@@ -39,7 +43,7 @@ def render_status():
         ("Investment Case", "Connected"),
         ("Funding Mix", "Connected"),
         ("Partnership", "Connected"),
-        ("Returns", "Connected"),
+        ("Investor Returns", "Connected"),
     ]
 
     for col, (label, value) in zip(cols, cards):
@@ -70,17 +74,37 @@ def render_dashboard():
     if module == "Investment Case":
         render_investment_case()
 
+    elif module == "Scenarios":
+        render_scenarios_view()
+
+    elif module == "Partnership":
+        render_partnership()
+
+    elif module == "Cash Flow":
+        render_cash_flow_view()
+
+    elif module == "Sensitivity":
+        render_sensitivity_view()
+
     elif module == "Funding Mix":
         render_funding_mix()
 
-    elif module == "Partnership Structure":
-        render_partnership()
+    elif module == "Assumptions":
+        st.markdown(
+            '<div class="v2-section">Assumptions</div>',
+            unsafe_allow_html=True,
+        )
+        st.info("Assumptions module is reserved for the V2 editable assumptions integration.")
 
-    elif module == "Investor Returns":
-        render_returns()
+    elif module == "Exports":
+        st.markdown(
+            '<div class="v2-section">Exports</div>',
+            unsafe_allow_html=True,
+        )
+        st.info("Exports module is reserved for the V2 export integration.")
 
-    elif module == "NPV / IRR":
-        render_npv_irr()
+    elif module == "Executive":
+        render_status()
 
     else:
         st.markdown(
@@ -88,7 +112,11 @@ def render_dashboard():
             unsafe_allow_html=True,
         )
 
-        st.info(
-            f"{module} module is connected to the V2 dashboard architecture. "
-            "The validated financial engine will be surfaced here in the next integration step."
-        )
+    if module == "Investor Returns":
+        render_returns()
+
+    elif module == "NPV / IRR":
+        render_npv_irr()
+
+    elif module == "KPIs":
+        render_kpis_view()
