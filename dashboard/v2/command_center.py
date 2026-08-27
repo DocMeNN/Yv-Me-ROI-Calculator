@@ -1,4 +1,6 @@
-﻿import streamlit as st
+﻿from __future__ import annotations
+
+import streamlit as st
 
 from .cash_flow_view import render_cash_flow_view
 from .funding_mix_view import render_funding_mix
@@ -61,6 +63,20 @@ def render_status():
             )
 
 
+def _default_periods():
+    from calculator.v2.cash_flow import AnnualOperatingPeriod
+
+    return [
+        AnnualOperatingPeriod(
+            year=year,
+            revenue=0.0,
+            operating_cost=0.0,
+            investor_share=0.0,
+        )
+        for year in range(1, 6)
+    ]
+
+
 def render_dashboard():
     render_header()
     render_status()
@@ -81,7 +97,15 @@ def render_dashboard():
         render_partnership()
 
     elif module == "Cash Flow":
-        render_cash_flow_view()
+        periods = st.session_state.get("v2_periods") or _default_periods()
+        investment_amount = st.session_state.get(
+            "v2_investment_amount",
+            10000000.0,
+        )
+        render_cash_flow_view(
+            periods=periods,
+            investment_amount=investment_amount,
+        )
 
     elif module == "Sensitivity":
         render_sensitivity_view()
@@ -94,25 +118,23 @@ def render_dashboard():
             '<div class="v2-section">Assumptions</div>',
             unsafe_allow_html=True,
         )
-        st.info("Assumptions module is reserved for the V2 editable assumptions integration.")
+        st.info(
+            "Assumptions module is reserved for the V2 editable assumptions integration."
+        )
 
     elif module == "Exports":
         st.markdown(
             '<div class="v2-section">Exports</div>',
             unsafe_allow_html=True,
         )
-        st.info("Exports module is reserved for the V2 export integration.")
+        st.info(
+            "Exports module is reserved for the V2 export integration."
+        )
 
     elif module == "Executive":
         render_status()
 
-    else:
-        st.markdown(
-            f'<div class="v2-section">{module}</div>',
-            unsafe_allow_html=True,
-        )
-
-    if module == "Investor Returns":
+    elif module == "Investor Returns":
         render_returns()
 
     elif module == "NPV / IRR":
@@ -120,3 +142,13 @@ def render_dashboard():
 
     elif module == "KPIs":
         render_kpis_view()
+
+    else:
+        st.markdown(
+            f'<div class="v2-section">{module}</div>',
+            unsafe_allow_html=True,
+        )
+
+
+if __name__ == "__main__":
+    render_dashboard()
