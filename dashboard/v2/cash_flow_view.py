@@ -17,7 +17,7 @@ def render_cash_flow_view(
 
     cash_flows = build_investor_cash_flows(
         periods=periods,
-        investment_amount=investment_amount,
+        initial_investment=investment_amount,
     )
 
     st.dataframe(
@@ -45,3 +45,4 @@ def render_cash_flow_view(
         "Initial Investment",
         f"₦{investment_amount:,.0f}",
     )
+

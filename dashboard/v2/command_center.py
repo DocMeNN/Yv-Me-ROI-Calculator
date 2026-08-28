@@ -69,9 +69,10 @@ def _default_periods():
     return [
         AnnualOperatingPeriod(
             year=year,
-            revenue=0.0,
-            operating_cost=0.0,
-            investor_share=0.0,
+            beneficiaries=100,
+            paying_beneficiaries=100,
+            revenue=18000000.0,
+            operating_cost=13200000.0,
         )
         for year in range(1, 6)
     ]

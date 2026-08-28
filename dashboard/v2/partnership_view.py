@@ -6,7 +6,6 @@ from calculator.v2.partnership import (
     calculate_partner_share,
     calculate_partner_investment,
     evaluate_structure,
-    compare_partnership_structures,
 )
 
 
@@ -33,7 +32,7 @@ def render_partnership():
 
     with col2:
         investor_share = st.number_input(
-            "Investor Share (%)",
+            "Investor Equity (%)",
             min_value=0.0,
             max_value=100.0,
             value=40.0,
@@ -51,55 +50,63 @@ def render_partnership():
             key="v2_partnership_revenue_share",
         )
 
+    annual_revenue = st.number_input(
+        "Annual Revenue (NGN)",
+        min_value=0.0,
+        value=18000000.0,
+        step=500000.0,
+        format="%.0f",
+        key="v2_partnership_annual_revenue",
+    )
+
+    annual_operating_cost = st.number_input(
+        "Annual Operating Cost (NGN)",
+        min_value=0.0,
+        value=13200000.0,
+        step=500000.0,
+        format="%.0f",
+        key="v2_partnership_operating_cost",
+    )
+
+    setup_cost = st.number_input(
+        "Setup Cost (NGN)",
+        min_value=0.0,
+        value=investment,
+        step=500000.0,
+        format="%.0f",
+        key="v2_partnership_setup_cost",
+    )
+
     structure = PartnershipStructure(
         name="Custom Partnership",
-        investment_amount=investment,
-        investor_share=investor_share / 100,
+        funding_type="revenue_share",
+        initial_investment=float(investment),
         revenue_share=revenue_share / 100,
+        equity_percentage=investor_share / 100,
     )
 
     try:
-        result = evaluate_structure(structure)
-    except TypeError:
-        try:
-            result = evaluate_structure(
-                investment=investment,
-                investor_share=investor_share / 100,
-                revenue_share=revenue_share / 100,
-            )
-        except Exception as exc:
-            st.error(f"Partnership engine adapter error: {exc}")
-            return
+        result = evaluate_structure(
+            structure=structure,
+            annual_revenue=float(annual_revenue),
+            annual_operating_cost=float(annual_operating_cost),
+            setup_cost=float(setup_cost),
+        )
     except Exception as exc:
         st.error(f"Partnership engine error: {exc}")
         return
 
-    def value(result, *names, default=0):
-        if isinstance(result, dict):
-            for name in names:
-                if name in result:
-                    return result[name]
-        else:
-            for name in names:
-                if hasattr(result, name):
-                    return getattr(result, name)
-        return default
-
-    partner_investment = value(
-        result,
+    partner_investment = result.get(
         "partner_investment",
-        "investment",
-        default=calculate_partner_investment(investment, structure),
+        calculate_partner_investment(structure, setup_cost),
     )
 
-    partner_share = value(
-        result,
-        "partner_share",
-        "revenue_share",
-        default=calculate_partner_share(revenue_share, structure),
+    partner_revenue_share = result.get(
+        "partner_revenue_share",
+        calculate_partner_share(annual_revenue, structure),
     )
 
-    cols = st.columns(3)
+    cols = st.columns(4)
 
     with cols[0]:
         st.metric(
@@ -109,14 +116,20 @@ def render_partnership():
 
     with cols[1]:
         st.metric(
-            "Investor Share",
+            "Investor Equity",
             f"{investor_share:.1f}%",
         )
 
     with cols[2]:
         st.metric(
             "Revenue Share",
-            f"{float(partner_share):,.1f}%",
+            f"{revenue_share:.1f}%",
+        )
+
+    with cols[3]:
+        st.metric(
+            "Annual Partner Revenue",
+            f"₦{float(partner_revenue_share):,.0f}",
         )
 
     st.markdown(
@@ -124,15 +137,18 @@ def render_partnership():
         unsafe_allow_html=True,
     )
 
-    structure_rows = []
-
-    for key, item in STRUCTURES.items():
-        structure_rows.append(
-            {
-                "Structure": key,
-                "Description": getattr(item, "description", ""),
-            }
-        )
+    structure_rows = [
+        {
+            "Structure": key,
+            "Funding Type": item.funding_type,
+            "Initial Investment": item.initial_investment,
+            "Revenue Share": item.revenue_share,
+            "Equity": item.equity_percentage,
+            "Grant": item.grant_amount,
+            "Working Capital": item.working_capital,
+        }
+        for key, item in STRUCTURES.items()
+    ]
 
     st.dataframe(
         structure_rows,
@@ -141,7 +157,4 @@ def render_partnership():
     )
 
     with st.expander("Partnership Engine Output"):
-        if isinstance(result, dict):
-            st.json(result)
-        else:
-            st.write(vars(result))
+        st.json(result)

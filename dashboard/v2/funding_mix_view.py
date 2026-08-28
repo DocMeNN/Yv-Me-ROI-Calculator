@@ -22,8 +22,7 @@ def render_funding_mix():
     )
 
     st.caption(
-        "Evaluate the proposed capital structure across investor, partner, "
-        "grant and other funding sources."
+        "Evaluate the proposed capital structure across investor, partner, grant and other funding sources."
     )
 
     col1, col2, col3 = st.columns(3)
@@ -63,37 +62,29 @@ def render_funding_mix():
         f"Calculated Grant / Other Share: **{grant_pct:.1f}%**"
     )
 
-    try:
-        sources = [
-            FundingSource(
-                name="Investor",
-                amount=total_investment * investor_pct / 100,
-            ),
-            FundingSource(
-                name="Partner",
-                amount=total_investment * partner_pct / 100,
-            ),
-            FundingSource(
-                name="Grant / Other",
-                amount=total_investment * grant_pct / 100,
-            ),
-        ]
+    sources = [
+        FundingSource(
+            name="Investor",
+            funding_type="investment",
+            amount=total_investment * investor_pct / 100,
+        ),
+        FundingSource(
+            name="Partner",
+            funding_type="partnership",
+            amount=total_investment * partner_pct / 100,
+        ),
+        FundingSource(
+            name="Grant / Other",
+            funding_type="grant",
+            amount=total_investment * grant_pct / 100,
+        ),
+    ]
 
+    try:
         result = evaluate_funding_mix(
             sources=sources,
-            total_required=total_investment,
+            setup_cost=float(total_investment),
         )
-
-    except TypeError:
-        try:
-            result = evaluate_funding_mix(
-                sources,
-                total_investment,
-            )
-        except Exception as exc:
-            st.error(f"Funding Mix engine adapter error: {exc}")
-            return
-
     except Exception as exc:
         st.error(f"Funding Mix engine error: {exc}")
         return
@@ -114,16 +105,10 @@ def render_funding_mix():
         default=max(0, total_investment - total_funded),
     )
 
-    coverage = _value(
-        result,
-        "coverage_ratio",
-        "funding_coverage",
-        "coverage",
-        default=(
-            total_funded / total_investment
-            if total_investment
-            else 0
-        ),
+    coverage = (
+        total_funded / total_investment
+        if total_investment
+        else 0
     )
 
     cols = st.columns(3)
@@ -179,7 +164,4 @@ def render_funding_mix():
     )
 
     with st.expander("Funding Mix Engine Output"):
-        if isinstance(result, dict):
-            st.json(result)
-        else:
-            st.write(vars(result))
+        st.json(result)
