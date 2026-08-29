@@ -15,9 +15,14 @@ def render_cash_flow_view(
 ) -> None:
     st.markdown("### Cash Flow")
 
+    revenue_share = float(
+        st.session_state.get("v2_revenue_share", 0.20)
+    )
+
     cash_flows = build_investor_cash_flows(
         periods=periods,
         initial_investment=investment_amount,
+        revenue_share=revenue_share,
     )
 
     st.dataframe(
@@ -32,7 +37,7 @@ def render_cash_flow_view(
         hide_index=True,
     )
 
-    total_cash_flow = sum(cf.cash_flow for cf in cash_flows)
+    total_cash_flow = sum(cf.net_cash_flow for cf in cash_flows)
 
     col1, col2 = st.columns(2)
 
@@ -45,4 +50,3 @@ def render_cash_flow_view(
         "Initial Investment",
         f"₦{investment_amount:,.0f}",
     )
-
