@@ -29,7 +29,7 @@ def render_cash_flow_view(
         [
             {
                 "Year": cf.year,
-                "Cash Flow (NGN)": cf.cash_flow,
+                "Cash Flow (NGN)": cf.net_cash_flow,
             }
             for cf in cash_flows
         ],
